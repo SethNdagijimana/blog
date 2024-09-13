@@ -1,8 +1,13 @@
+"use client"
+
+import { FormField } from "@/components/FormField"
 import Nav from "@/components/nav/Nav"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useState } from "react"
 
 export default function Home() {
-  const posts = [
+  const [posts, setPosts] = useState([
     {
       slug: "first-post",
       title: "First Blog Post",
@@ -13,7 +18,41 @@ export default function Home() {
       title: "Second Blog Post",
       description: "This is the second blog post."
     }
-  ]
+  ])
+
+  const [newPost, setNewPost] = useState({
+    title: "",
+    description: ""
+  })
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+
+    const slug = newPost.title.toLowerCase().replace(/ /g, "-")
+
+    setPosts([
+      ...posts,
+      {
+        slug,
+        title: newPost.title,
+        description: newPost.description
+      }
+    ])
+
+    setNewPost({
+      title: "",
+      description: ""
+    })
+  }
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target
+    setNewPost({
+      ...newPost,
+      [name]: value
+    })
+  }
+
   return (
     <>
       <Nav />
@@ -22,7 +61,8 @@ export default function Home() {
         <h1>Welcome to My Blog</h1>
         <p>Your source for the latest updates</p>
       </section>
-      <section className="grid grid-cols-2 gap-5 p-5">
+
+      <section className="grid grid-cols-2 gap-5 p-5 ">
         {posts.map((post) => (
           <article
             key={post.slug}
@@ -30,10 +70,41 @@ export default function Home() {
           >
             <h2>{post.title}</h2>
             <p>{post.description}</p>
-            <Link href={`/blog/${post.slug}`}>Read More</Link>
+            <Link href={`/posts/${post.slug}`}>Read More</Link>
           </article>
         ))}
       </section>
+
+      <div className="p-5 w-[500px] ">
+        <form className="bg-[#ddd] p-2" onSubmit={handleSubmit}>
+          <div>
+            <FormField
+              type="text"
+              label="Blog Title"
+              placeholder="Enter the blog title"
+              name="title"
+              value={newPost.title}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="mt-2">
+            <FormField
+              type="text"
+              isTextArea
+              label="Write a Blog"
+              placeholder="Type something..."
+              name="description"
+              value={newPost.description}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="mt-1">
+            <Button type="submit">POST</Button>
+          </div>
+        </form>
+      </div>
     </>
   )
 }
