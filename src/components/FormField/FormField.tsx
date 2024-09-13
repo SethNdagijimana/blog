@@ -21,7 +21,8 @@ const FormField: FC<FormFieldProps> = ({
 }) => {
   const [showPassword, setShowpassword] = useState<boolean>(false)
   const [isFocused, setIsFocused] = useState(false)
-  const inputRef = useRef<any>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleFocus = () => {
     setIsFocused(true)
@@ -54,7 +55,7 @@ const FormField: FC<FormFieldProps> = ({
 
           {isTextArea ? (
             <textarea
-              ref={inputRef}
+              ref={textAreaRef}
               className={`bg-transparent w-full focus:outline-none block placeholder:text-[#666] placeholder:font-medium text-sm flex-1`}
               {...props}
               onFocus={handleFocus}

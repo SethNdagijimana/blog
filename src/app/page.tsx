@@ -6,8 +6,14 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useState } from "react"
 
+interface Post {
+  slug: string
+  title: string
+  description: string
+}
+
 export default function Home() {
-  const [posts, setPosts] = useState([
+  const [posts, setPosts] = useState<Post[]>([
     {
       slug: "first-post",
       title: "First Blog Post",
@@ -20,7 +26,10 @@ export default function Home() {
     }
   ])
 
-  const [newPost, setNewPost] = useState({
+  const [newPost, setNewPost] = useState<{
+    title: string
+    description: string
+  }>({
     title: "",
     description: ""
   })
