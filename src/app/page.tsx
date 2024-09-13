@@ -101,7 +101,12 @@ export default function Home() {
           </div>
 
           <div className="mt-1">
-            <Button type="submit">POST</Button>
+            <Button
+              type="submit"
+              disabled={!newPost.title || !newPost.description}
+            >
+              POST
+            </Button>
           </div>
         </form>
       </div>
