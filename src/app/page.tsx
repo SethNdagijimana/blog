@@ -25,7 +25,7 @@ export default function Home() {
     description: ""
   })
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const slug = newPost.title.toLowerCase().replace(/ /g, "-")
@@ -45,7 +45,9 @@ export default function Home() {
     })
   }
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
     setNewPost({
       ...newPost,
